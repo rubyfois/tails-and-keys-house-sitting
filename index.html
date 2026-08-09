@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tails &amp; Keys House Sitting — Someone's home, looked after</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine: #EAC6C9;
+    --pine-deep: #C98D93;
+    --fog: #FBF0F1;
+    --fog-dim: #F5DEE0;
+    --ink: #3A2C30;
+    --amber: #EAC6C9;
+    --amber-soft: #F5DEE0;
+    --dusk-blue: #EAC6C9;
+    --paper: #FFFBF6;
+    --line: rgba(58,44,48,0.1);
+    --line-light: rgba(58,44,48,0.18);
+    --thatch: #A6A768;
+    --thatch-dark: #767C43;
+    --gold: #E8B84B;
+    --gold-dark: #C4922B;
+    --stone: #BFB4A0;
+    --stone-dark: #8F8371;
+    --path-tan: #E7D8B8;
+    --forest: #8A9B76;
+    --forest-dark: #5E6E4C;
+    --shutter: #71916A;
+    --shutter-dark: #4F6B49;
+    --roof-dark: #4B584A;
+    --roof-dark2: #3A4438;
+    --brick: #AC6448;
+    --brick-dark: #814930;
+    --wood: #B98354;
+    --wood-dark: #8C6039;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Karla',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--pine-deep);
+  }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,243,236,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px; max-width:1080px; margin:0 auto;
+  }
+  .brand{
+    font-family:'Fraunces',serif;
+    font-size:20px; font-weight:600;
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--pine-deep);display:inline-block;}
+  .nav-links{display:flex; gap:32px; font-size:14.5px; font-weight:600;}
+  .nav-links a{opacity:0.75; transition:opacity .2s;}
+  .nav-links a:hover{opacity:1;}
+  .nav-cta{
+    background:var(--pine); color:var(--ink);
+    padding:10px 20px; border-radius:100px;
+    font-size:14px; font-weight:700;
+    transition:background .2s;
+  }
+  .nav-cta:hover{background:var(--pine-deep); color:var(--paper);}
+  .nav-toggle{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--pine);
+    color:var(--ink);
+    position:relative;
+    overflow:hidden;
+    padding:88px 0 0;
+  }
+  .hero-copy{max-width:640px;}
+  .hero h1{
+    font-size:clamp(36px,5vw,58px);
+    line-height:1.06;
+    margin:18px 0 22px;
+    color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--pine-deep);
+  }
+  .hero p.lede{
+    font-size:18px;
+    max-width:46ch;
+    color:rgba(58,44,48,0.75);
+    margin-bottom:34px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px;}
+  .btn-primary{
+    background:var(--pine-deep); color:var(--paper);
+    padding:14px 26px; border-radius:100px;
+    font-weight:700; font-size:15px;
+    display:inline-block;
+    transition:transform .18s ease, background .18s ease;
+    border:none; cursor:pointer;
+  }
+  .btn-primary:hover{background:#B57980; transform:translateY(-1px);}
+  .btn-ghost{
+    border:1.5px solid var(--line-light);
+    color:var(--ink);
+    padding:13px 24px; border-radius:100px;
+    font-weight:700; font-size:15px;
+    transition:border-color .18s ease, background .18s ease;
+  }
+  .btn-ghost:hover{border-color:rgba(58,44,48,0.4); background:rgba(58,44,48,0.05);}
+
+  .trust-row{
+    display:flex; gap:28px; flex-wrap:wrap;
+    padding-bottom:40px;
+    border-top:1px solid var(--line-light);
+    padding-top:24px;
+    font-size:13.5px; color:rgba(58,44,48,0.65);
+  }
+  .trust-row span{display:flex; align-items:center; gap:8px;}
+  .trust-row svg{width:15px;height:15px;flex-shrink:0;}
+
+  /* Signature visual: unified watercolor cottage-in-meadow scene */
+  .hero-photo{
+    width:100%; margin:40px auto 0;
+    aspect-ratio:1092/960;
+  }
+  .hero-photo img{width:100%; height:100%; object-fit:contain; display:block;}
+  .smoke{transform-box:fill-box; transform-origin:center;}
+  @media (prefers-reduced-motion: no-preference){
+    .smoke{animation:drift 4s ease-in-out infinite;}
+    .s2{animation-delay:.4s;}
+    .s3{animation-delay:.8s;}
+  }
+  @keyframes drift{
+    0%,100%{transform:translateY(0); opacity:1;}
+    50%{transform:translateY(-6px); opacity:0.6;}
+  }
+
+  /* ---------- Section basics ---------- */
+  section{padding:100px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px); margin-top:14px;}
+  .section-head p{font-size:16.5px; color:rgba(28,35,32,0.68); margin-top:14px;}
+
+  /* ---------- About ---------- */
+  .about{
+    max-width:720px;
+  }
+  .about-copy p{margin-bottom:18px; font-size:16px; color:rgba(28,35,32,0.82); transition:text-shadow .3s ease;}
+  .about-copy p:hover{
+    text-shadow:0 0 6px rgba(232,102,138,0.85), 0 0 16px rgba(232,102,138,0.55), 0 0 30px rgba(232,102,138,0.35);
+  }
+  .about-copy p:first-of-type{color:var(--ink);}
+  .creds{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+    margin-top:32px; padding-top:28px; border-top:1px solid var(--line);
+  }
+  .cred .num{font-family:'Fraunces',serif; font-size:30px; color:var(--pine-deep);}
+  .cred .lbl{font-size:13px; color:rgba(28,35,32,0.6); margin-top:4px;}
+
+  /* ---------- Services ---------- */
+  .services{background:var(--fog-dim);}
+  .service-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:22px;
+  }
+  .service-card{
+    background:var(--paper); padding:32px 26px;
+    border-radius:18px;
+    box-shadow:0 6px 18px rgba(58,44,48,0.07);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .service-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 55px 10px rgba(232,102,138,0.75), 0 14px 28px rgba(58,44,48,0.15);
+  }
+  .service-card:hover .icon-badge{background:var(--pine);}
+  .service-card .icon-badge{
+    width:54px; height:54px; border-radius:50%;
+    background:var(--fog-dim);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:20px;
+    transition:background .25s ease;
+  }
+  .service-card .icon{
+    width:24px; height:24px;
+    color:var(--pine-deep);
+  }
+  .service-card h3{font-size:18px; margin-bottom:10px; font-weight:600;}
+  .service-card p{font-size:14.5px; color:rgba(28,35,32,0.65);}
+
+  /* ---------- How it works ---------- */
+  .steps{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:32px;
+    counter-reset:step;
+  }
+  .step{position:relative; padding-top:8px;}
+  .step h3, .step p{transition:text-shadow .3s ease;}
+  .step:hover h3, .step:hover p{
+    text-shadow:0 0 6px rgba(232,102,138,0.85), 0 0 16px rgba(232,102,138,0.55), 0 0 30px rgba(232,102,138,0.35);
+  }
+  .step::before{
+    counter-increment:step;
+    content:counter(step);
+    font-family:'Fraunces',serif;
+    font-size:15px; font-weight:600;
+    width:34px; height:34px; border-radius:50%;
+    background:var(--pine-deep); color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+  }
+  .step h3{font-size:17px; margin-bottom:8px; font-weight:600;}
+  .step p{font-size:14.5px; color:rgba(28,35,32,0.65);}
+
+  /* ---------- Testimonials ---------- */
+  .testimonials{background:var(--pine); color:var(--ink);}
+  .testimonials .section-head p{color:rgba(58,44,48,0.65);}
+  .testimonials .eyebrow{color:var(--pine-deep);}
+  .quote-row{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:28px;
+  }
+  .quote-card{
+    background:rgba(255,251,246,0.55);
+    border:1px solid var(--line-light);
+    border-radius:16px;
+    padding:28px;
+  }
+  .quote-card .stars{color:var(--pine-deep); font-size:14px; letter-spacing:2px; margin-bottom:16px;}
+  .quote-card p.q{font-size:15.5px; color:rgba(58,44,48,0.85); margin-bottom:20px;}
+  .quote-card .who{font-size:13.5px; color:rgba(58,44,48,0.55); font-weight:600;}
+  .review-empty{font-size:14.5px; color:rgba(58,44,48,0.6); text-align:center; padding:20px 0;}
+
+  .review-form-box{
+    background:rgba(255,251,246,0.55); border:1px solid var(--line-light);
+    border-radius:16px; padding:28px; max-width:520px; margin:40px auto 0;
+  }
+  .review-form-box form{display:flex; flex-direction:column; gap:12px;}
+  .review-form-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .review-form-row input{flex:1; min-width:160px;}
+  .review-form-box input, .review-form-box textarea{
+    border:1px solid var(--line); border-radius:8px; padding:11px 13px;
+    font-family:'Karla',sans-serif; font-size:14.5px; background:var(--paper); color:var(--ink);
+  }
+  .review-form-box button[type="submit"]{
+    margin-top:2px; background:var(--pine-deep); color:var(--paper);
+    border:none; border-radius:8px; padding:13px; font-weight:700; font-size:15px;
+    cursor:pointer; transition:background .2s;
+  }
+  .review-form-box button[type="submit"]:hover{background:#B57980;}
+  .star-picker{display:flex; gap:4px;}
+  .star-btn{
+    background:none; border:none; cursor:pointer;
+    font-size:26px; line-height:1; color:rgba(58,44,48,0.25);
+    transition:color .15s ease, transform .15s ease;
+    padding:2px;
+  }
+  .star-btn:hover{transform:scale(1.12);}
+  .star-btn.active{color:var(--pine-deep);}
+
+  /* ---------- Availability / CTA ---------- */
+  .cta-band{
+    background:var(--amber);
+    border-radius:22px;
+    padding:56px;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    gap:32px;
+  }
+  .cta-band > div:first-child{max-width:640px;}
+  .cta-band form{width:100%; max-width:520px; text-align:left;}
+  .cta-band .eyebrow{font-size:13.5px; font-weight:800; margin-bottom:6px;}
+  .cta-band h2{font-size:clamp(28px,3.4vw,38px); font-weight:700; color:rgba(58,44,48,0.88); margin-bottom:12px; letter-spacing:-0.015em;}
+  .cta-band p{color:rgba(58,44,48,0.75); font-size:15.5px; max-width:44ch;}
+  .cta-form{
+    background:var(--paper); border-radius:14px; padding:24px;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .cta-form label{font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:rgba(28,35,32,0.6);}
+  .cta-form input, .cta-form textarea{
+    border:1px solid var(--line); border-radius:8px; padding:11px 13px;
+    font-family:'Karla',sans-serif; font-size:14.5px; background:var(--paper);
+    color:var(--ink);
+  }
+  .cta-form input:focus, .cta-form textarea:focus, .cta-form button:focus-visible,
+  a:focus-visible, button:focus-visible{
+    outline:2.5px solid var(--pine-deep); outline-offset:2px;
+  }
+  .cta-form button{
+    margin-top:6px; background:var(--pine-deep); color:var(--paper);
+    border:none; border-radius:8px; padding:13px; font-weight:700; font-size:15px;
+    cursor:pointer; transition:background .2s;
+  }
+  .cta-form button:hover{background:#B57980;}
+  .form-note{font-size:12.5px; color:rgba(28,35,32,0.55); margin-top:2px;}
+
+  .payment-followup{
+    display:none;
+    margin-top:6px; background:var(--fog-dim); border-radius:10px; padding:18px;
+    text-align:center;
+  }
+  .payment-followup.show{display:block;}
+  .payment-followup-text{font-size:13.5px; color:rgba(28,35,32,0.8); margin-bottom:12px; line-height:1.5;}
+  .payment-followup-btn{
+    display:inline-block; background:var(--pine-deep); color:var(--paper);
+    padding:12px 22px; border-radius:100px; font-weight:700; font-size:14px;
+    transition:background .2s;
+  }
+  .payment-followup-btn:hover{background:#B57980;}
+
+  .quote-box{background:var(--fog-dim); border-radius:10px; padding:16px; margin-top:4px;}
+  .quote-label{font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:rgba(28,35,32,0.6); margin-bottom:10px;}
+  .quote-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:12px;}
+  .quote-grid div{display:flex; flex-direction:column; gap:4px;}
+  .quote-grid input{width:100%;}
+  .quote-check{display:flex; align-items:flex-start; gap:8px; font-size:12.5px; color:rgba(28,35,32,0.75); margin-bottom:14px; cursor:pointer; text-transform:none; font-weight:400; letter-spacing:normal;}
+  .quote-check input{margin-top:2px;}
+  .quote-result{display:flex; align-items:baseline; gap:8px; margin-bottom:10px; flex-wrap:wrap;}
+  .quote-result #quote-amount{font-family:'Fraunces',serif; font-size:28px; font-weight:600; color:var(--pine-deep);}
+  .quote-sub{font-size:13px; color:rgba(28,35,32,0.6);}
+  .quote-disclaimer{font-size:12.5px; color:rgba(28,35,32,0.6); line-height:1.5;}
+  .payment-options{display:flex; gap:10px; flex-wrap:wrap;}
+  .payment-option{
+    position:relative; flex:1; min-width:130px;
+    border:1.5px solid var(--line-light); border-radius:10px;
+    padding:12px 14px; cursor:pointer; transition:border-color .2s, background .2s;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .payment-option input{position:absolute; opacity:0; pointer-events:none;}
+  .payment-option-title{font-weight:700; font-size:14px; color:var(--ink);}
+  .payment-option-sub{font-size:11.5px; color:rgba(28,35,32,0.6); line-height:1.4;}
+  .payment-option:has(input:checked){border-color:var(--pine-deep); background:var(--fog-dim);}
+  .payment-option:has(input:focus-visible){outline:2.5px solid var(--pine-deep); outline-offset:2px;}
+
+  .terms-box{background:var(--fog-dim); border-radius:10px; padding:16px;}
+  .terms-box summary{cursor:pointer; list-style:none; display:flex; align-items:center; gap:6px;}
+  .terms-box summary::-webkit-details-marker{display:none;}
+  .terms-box summary::before{content:'▸'; font-size:11px; color:var(--pine-deep); transition:transform .15s;}
+  .terms-box[open] summary::before{transform:rotate(90deg);}
+  .terms-toggle{font-size:11px; font-weight:400; text-transform:none; letter-spacing:normal; color:rgba(28,35,32,0.5);}
+  .terms-box[open] summary{margin-bottom:12px;}
+  .terms-box ul{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:8px;}
+  .terms-box li{font-size:12.5px; line-height:1.55; color:rgba(28,35,32,0.75);}
+  .terms-box li strong{color:var(--ink); font-weight:700;}
+  .tc-row{display:flex; align-items:flex-start; gap:8px; font-size:13px; color:rgba(28,35,32,0.8); margin-top:2px; cursor:pointer; text-transform:none; font-weight:400; letter-spacing:normal;}
+  .tc-row input{margin-top:3px; flex-shrink:0;}
+
+  .questions-box{align-self:flex-start; width:100%; max-width:220px;}
+  .questions-box label{display:block; font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:rgba(58,44,48,0.7); margin-bottom:8px;}
+  .questions-box textarea{
+    width:100%; resize:vertical; border:1px solid var(--line-light); border-radius:8px;
+    padding:11px 13px; font-family:'Karla',sans-serif; font-size:14.5px;
+    background:var(--paper); color:var(--ink);
+  }
+  .questions-box textarea:focus{outline:2.5px solid var(--pine-deep); outline-offset:2px;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:56px 0 40px; border-top:1px solid var(--line);}
+  .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;}
+  .foot-brand{font-family:'Fraunces',serif; font-size:18px; font-weight:600;}
+  .foot-links{display:flex; gap:26px; font-size:13.5px; color:rgba(28,35,32,0.6);}
+  .foot-links a:hover{color:var(--ink);}
+  .foot-bottom{margin-top:28px; font-size:12.5px; color:rgba(28,35,32,0.45);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    .nav-links{display:none;}
+    .hero-photo{margin:28px auto 0;}
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+    .steps{grid-template-columns:repeat(2,1fr);}
+    .quote-row{grid-template-columns:1fr;}
+    .cta-band{padding:36px 24px;}
+    .creds{grid-template-columns:repeat(3,1fr); gap:10px;}
+  }
+  @media (max-width:520px){
+    section{padding:64px 0;}
+    .service-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand"><span class="dot"></span>Tails &amp; Keys House Sitting</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#how">How it works</a>
+      <a href="#reviews">Reviews</a>
+    </div>
+    <a href="#contact" class="nav-cta">Check availability</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">House &amp; pet sitting, without compromise.</p>
+      <h1>Every detail covered,<br>every routine<br><em>preserved.</em></h1>
+      <p class="lede">Where trusted home care meets devoted pet care. Keeping your property secure and your companions happy, comfortable, and loved while you're away&mdash;because every pet deserves to stay happy at home, and every owner deserves complete peace of mind.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Check my availability</a>
+        <a href="#services" class="btn-ghost">See what's included</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="images/cottage_scene.png" alt="A watercolor storybook cottage in a wildflower meadow, with a terracotta scalloped roof, arched wooden door, iron lantern, flower boxes, picket fence, and a stone path leading through lavender and daisies">
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <div class="about-copy">
+      <h2 style="margin:14px 0 22px;">A little about the person who'll be in your kitchen.</h2>
+      <p>Hi, I'm Ruby! I'm a 20-year-old based on the Mornington Peninsula who has been house and pet sitting for the past year. Loving what I do so much, I've officially taken the leap to turn my passion into a full-time business!</p>
+      <p>Growing up around animals, caring for them comes naturally to me. I own two horses and have had dogs and cats in my life for as long as I can remember. Whether it's high-energy dog walks, cozy cat cuddles, or keeping farm animals on schedule, I treat every pet with the same love and attention as my own.</p>
+      <p>Bonus perk: I also work as a professional house cleaner! That means while you're away, your pets are pampered, your property is secure, and you get to walk through the door to a sparkling clean, fresh home upon your return.</p>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Services</p>
+      <h2>What's covered while you're gone</h2>
+    </div>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 14.5c-1-1.1-2.6-.8-2.6.5 0 1.1 1.4 1.9 2.6 2.8 1.2-.9 2.6-1.7 2.6-2.8 0-1.3-1.6-1.6-2.6-.5z"/></svg></div>
+        <h3>Home care</h3>
+        <p>Overnight stays, mail and packages brought in, bins out on schedule, and a lived-in house that doesn't look empty.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="16" rx="4.3" ry="3.6"/><ellipse cx="5.7" cy="10.2" rx="1.9" ry="2.3" transform="rotate(-20 5.7 10.2)"/><ellipse cx="10" cy="6.3" rx="1.8" ry="2.2" transform="rotate(-8 10 6.3)"/><ellipse cx="14.3" cy="6.3" rx="1.8" ry="2.2" transform="rotate(8 14.3 6.3)"/><ellipse cx="18.3" cy="10.2" rx="1.9" ry="2.3" transform="rotate(20 18.3 10.2)"/></svg></div>
+        <h3>Pet care</h3>
+        <p>Feeding, walks, meds if needed, and playtime — kept as close to your pet's normal routine as possible.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="7.86" r="3.4"/><circle cx="15.94" cy="10.72" r="3.4"/><circle cx="14.43" cy="15.35" r="3.4"/><circle cx="9.57" cy="15.35" r="3.4"/><circle cx="8.06" cy="10.72" r="3.4"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/></svg></div>
+        <h3>Plant &amp; garden</h3>
+        <p>Watering and basic outdoor upkeep so nothing's dried out when you land.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/><path d="M8.5 12.2l2.4 2.4 4.6-4.8"/></svg></div>
+        <h3>Security checks</h3>
+        <p>Doors, windows, and lights checked each day, plus a same-day heads-up if anything looks off.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">How it works</p>
+      <h2>From first message to welcome home</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Reach out</h3>
+        <p>Send your dates and what needs covering. I'll confirm availability, usually within a day.</p>
+      </div>
+      <div class="step">
+        <h3>Meet &amp; walk-through</h3>
+        <p>We meet at your place beforehand — routines, feeding times, quirks of the house, keys.</p>
+      </div>
+      <div class="step">
+        <h3>I move in</h3>
+        <p>I arrive whenever suits you — before or after you leave, and the same flexibility applies when you're back.</p>
+      </div>
+      <div class="step">
+        <h3>Updates &amp; handoff</h3>
+        <p>Daily photo check-ins while you're away, and a walkthrough with you when you're back.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <p class="eyebrow" style="color:rgba(58,44,48,0.8);">Before you pack a bag</p>
+        <h2>Your dates, my calendar — let's see if they match.</h2>
+      </div>
+      <form id="cta-form" class="cta-form" action="https://formspree.io/rubycavallofois@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New house sitting request">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div>
+          <label for="address">Address</label>
+          <input id="address" name="address" type="text" placeholder="Street address" required>
+        </div>
+        <div>
+          <label for="city">Town / City</label>
+          <input id="city" name="city" type="text" placeholder="e.g. Bristol" required>
+        </div>
+        <div>
+          <label for="postcode">Postcode</label>
+          <input id="postcode" name="postcode" type="text" placeholder="e.g. BS1 4ST" required>
+        </div>
+        <div>
+          <label for="dates">Dates</label>
+          <input id="dates" name="dates" type="text" placeholder="e.g. Sept 12–19" required>
+        </div>
+        <div class="quote-box">
+          <p class="quote-label">Get a rough quote</p>
+          <div class="quote-grid">
+            <div>
+              <label for="q-nights">Nights</label>
+              <input id="q-nights" name="nights" type="number" min="1" value="1">
+            </div>
+            <div>
+              <label for="q-dogs">Dogs</label>
+              <input id="q-dogs" name="dogs" type="number" min="0" value="0">
+            </div>
+            <div>
+              <label for="q-cats">Cats</label>
+              <input id="q-cats" name="cats" type="number" min="0" value="0">
+            </div>
+            <div>
+              <label for="q-horses">Horses</label>
+              <input id="q-horses" name="horses" type="number" min="0" value="0">
+            </div>
+          </div>
+          <label class="quote-check">
+            <input type="checkbox" id="q-small" name="small_animals">
+            Small animals too? (rabbits, guinea pigs, birds, reptiles, fish, chickens) — adds ~$12/night
+          </label>
+          <input type="hidden" id="rough-quote-field" name="rough_quote" value="$100 for 1 night (~$100/night)">
+          <div class="quote-result">
+            <span id="quote-amount">$100</span>
+            <span class="quote-sub" id="quote-sub">rough estimate for 1 night (~$100/night)</span>
+          </div>
+          <p class="quote-disclaimer">This is a <strong>rough quote</strong> to give you an idea of overall cost — not a final price. After we meet up and I see what's actually needed, I'll email you the confirmed total. If extra work comes up along the way, it'll be added on top.</p>
+        </div>
+
+        <div class="payment-box">
+          <p class="quote-label">Choose a payment plan</p>
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="payment-plan" value="half" checked>
+              <span class="payment-option-title">Half &amp; half</span>
+              <span class="payment-option-sub">50% at the start, 50% at the end</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="payment-plan" value="full">
+              <span class="payment-option-title">Pay in full</span>
+              <span class="payment-option-sub">100% upfront on day one</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="payment-plan" value="daily">
+              <span class="payment-option-title">Pay per day</span>
+              <span class="payment-option-sub">A daily payment for each night of the stay</span>
+            </label>
+          </div>
+        </div>
+
+        <details class="terms-box">
+          <summary class="quote-label">Terms &amp; conditions <span class="terms-toggle">— tap to view</span></summary>
+          <ul>
+            <li>The quote above is a <strong>rough estimate only</strong> — the final price is confirmed by email after an in-person meet &amp; greet.</li>
+            <li>Any <strong>extra pets, tasks, or requests</strong> found after the meet &amp; greet (or during the stay) may be added to the final cost.</li>
+            <li>A <strong>meet &amp; greet is required</strong> before a booking is confirmed — this lets me see the pets, home, and routine in person.</li>
+            <li>My partner usually stays with me during bookings — happy to introduce you both at the meet &amp; greet if that's helpful.</li>
+            <li>House sitting doesn't mean I'm sitting in the house all day — I'm there for the <strong>overnight stay as stated</strong>, but I'll also be out for parts of the day (riding my own horses, working for my partner, the gym). Pets and home are never left unattended for extended periods, and everything discussed at the meet &amp; greet will still be covered.</li>
+            <li>Cancellations made within 5 days of the booking start date incur a <strong>flat $100 cancellation fee</strong>, payable regardless of the final quote.</li>
+            <li>You'll need to provide <strong>keys/access, emergency contact details, and your vet's contact information</strong>.</li>
+            <li>In an emergency, I'm <strong>authorised to seek veterinary care</strong> on your pet's behalf, at your expense.</li>
+            <li>I'll treat your home and pets with care, but I'm <strong>not responsible for pre-existing damage</strong>, illness, or wear and tear.</li>
+            <li>If something breaks or goes wrong at the property during my stay (e.g. appliances, gates, fences, plumbing), I'll call a qualified tradesperson to fix it — <strong>repair costs are covered by you</strong>, the homeowner, not by me.</li>
+            <li>I'll always contact you first where possible before arranging any repair or callout, except in genuine emergencies.</li>
+            <li>The <strong>home needs to be clean</strong> when I arrive to start the stay.</li>
+            <li>I'll leave the house <strong>just as clean — if not cleaner</strong> — for your return.</li>
+            <li>If I arrive and the house hasn't been left clean, I reserve the right to either <strong>not go ahead with the stay, or call in a cleaner</strong> — with that fee added on top of the final cost.</li>
+            <li>Cancellations, changes, or questions should be sent as early as possible so we can sort it out together.</li>
+          </ul>
+        </details>
+
+        <label class="tc-row">
+          <input type="checkbox" id="tc-agree" name="agreed_to_terms" required>
+          I've read and agree to the terms &amp; conditions above.
+        </label>
+
+        <div class="questions-box">
+          <label for="questions">Questions or queries</label>
+          <textarea id="questions" name="questions" rows="6" placeholder="e.g. Do you look after goats, sheep, etc?"></textarea>
+        </div>
+
+        <button type="submit">Send request</button>
+        <p class="form-note">This is a demo form — hook it up to email or a booking tool when you're ready to go live.</p>
+
+        <div id="payment-followup" class="payment-followup">
+          <p class="payment-followup-text">Once your official overall cost is approved by email, tap below to go ahead with your payment plan.</p>
+          <a href="#" class="payment-followup-btn">Proceed to payment</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Reviews</p>
+      <h2>What it's like coming home</h2>
+    </div>
+    <div class="quote-row" id="review-list"></div>
+    <p class="review-empty" id="review-empty">No reviews yet — be the first to leave one.</p>
+
+    <div class="review-form-box">
+      <p class="quote-label">Leave a review</p>
+      <form id="review-form">
+        <div class="review-form-row">
+          <input id="review-name" type="text" placeholder="Your name" required>
+          <input id="review-stay" type="text" placeholder="e.g. Weekend trip, cat + plants">
+        </div>
+        <div class="star-picker" id="star-picker" role="radiogroup" aria-label="Rating">
+          <button type="button" class="star-btn" data-value="1" aria-label="1 star">★</button>
+          <button type="button" class="star-btn" data-value="2" aria-label="2 stars">★</button>
+          <button type="button" class="star-btn" data-value="3" aria-label="3 stars">★</button>
+          <button type="button" class="star-btn" data-value="4" aria-label="4 stars">★</button>
+          <button type="button" class="star-btn" data-value="5" aria-label="5 stars">★</button>
+        </div>
+        <textarea id="review-text" rows="3" placeholder="How did it go?" required></textarea>
+        <button type="submit">Submit review</button>
+      </form>
+      <p class="form-note">Reviews are saved in your browser for this demo, with the best-rated shown first — hook this up to a real review system when you're ready to go live.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="foot-brand">Tails &amp; Keys House Sitting</div>
+      <div class="foot-links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#how">How it works</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="foot-bottom">© 2026 Tails &amp; Keys House Sitting. Locally based, one home at a time.</p>
+  </div>
+</footer>
+
+<script>
+  function calcQuote(){
+    var nights = Math.max(1, parseInt(document.getElementById('q-nights').value) || 1);
+    var dogs = Math.max(0, parseInt(document.getElementById('q-dogs').value) || 0);
+    var cats = Math.max(0, parseInt(document.getElementById('q-cats').value) || 0);
+    var horses = Math.max(0, parseInt(document.getElementById('q-horses').value) || 0);
+    var small = document.getElementById('q-small').checked;
+
+    var hasPets = dogs > 0 || cats > 0;
+    var hasHorses = horses > 0;
+    var rate;
+
+    if (!hasPets && !hasHorses) {
+      rate = 100;
+    } else if (hasPets && hasHorses) {
+      rate = 170;
+      if (dogs > 3) rate += 10 * (dogs - 3);
+      if (horses > 3) rate += 15 * (horses - 3);
+    } else if (hasHorses) {
+      rate = horses <= 3 ? 140 : 180 + 15 * (horses - 4);
+    } else {
+      if (dogs >= 4) rate = 140 + 10 * (dogs - 4);
+      else if (dogs > 0) rate = 110;
+      else rate = 100; // cats only
+    }
+
+    if (cats >= 3) rate += 20;
+    if (small) rate += 12;
+
+    var total = rate * nights;
+    var subText = 'rough estimate for ' + nights + ' night' + (nights > 1 ? 's' : '') + ' (~$' + rate + '/night)';
+    document.getElementById('quote-amount').textContent = '$' + total;
+    document.getElementById('quote-sub').textContent = subText;
+    document.getElementById('rough-quote-field').value = '$' + total + ' — ' + subText;
+  }
+
+  ['q-nights','q-dogs','q-cats','q-horses'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', calcQuote);
+  });
+  document.getElementById('q-small').addEventListener('change', calcQuote);
+  calcQuote();
+
+  document.getElementById('cta-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var form = this;
+    var btn = form.querySelector('button[type="submit"]');
+    var originalText = btn.textContent;
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response){
+      if (response.ok) {
+        btn.textContent = 'Sent — I\'ll reply soon';
+        document.getElementById('payment-followup').classList.add('show');
+      } else {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        alert('Something went wrong sending that — please try again, or email directly.');
+      }
+    }).catch(function(){
+      btn.textContent = originalText;
+      btn.disabled = false;
+      alert('Something went wrong sending that — please try again, or email directly.');
+    });
+  });
+
+  // ---------- Reviews ----------
+  var REVIEWS_KEY = 'ruby-reviews';
+  var currentRating = 0;
+  var starButtons = document.querySelectorAll('.star-btn');
+
+  function setStars(value){
+    currentRating = value;
+    starButtons.forEach(function(btn){
+      btn.classList.toggle('active', parseInt(btn.dataset.value) <= value);
+    });
+  }
+
+  starButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){ setStars(parseInt(btn.dataset.value)); });
+  });
+
+  function loadReviews(){
+    try { return JSON.parse(localStorage.getItem(REVIEWS_KEY)) || []; }
+    catch(e){ return []; }
+  }
+
+  function saveReviews(reviews){
+    localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+  }
+
+  function renderReviews(){
+    var reviews = loadReviews();
+    var list = document.getElementById('review-list');
+    var empty = document.getElementById('review-empty');
+
+    if (reviews.length === 0){
+      list.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    var sorted = reviews.slice().sort(function(a,b){
+      if (b.rating !== a.rating) return b.rating - a.rating;
+      return b.time - a.time;
+    }).slice(0, 6);
+
+    list.innerHTML = sorted.map(function(r){
+      var stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      var stayLine = r.stay ? (r.name + ' — ' + r.stay) : r.name;
+      return '<div class="quote-card">' +
+        '<div class="stars">' + stars + '</div>' +
+        '<p class="q">' + escapeHtml(r.text) + '</p>' +
+        '<div class="who">' + escapeHtml(stayLine) + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function escapeHtml(str){
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  document.getElementById('review-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    if (currentRating === 0){
+      alert('Please pick a star rating.');
+      return;
+    }
+    var name = document.getElementById('review-name').value.trim();
+    var stay = document.getElementById('review-stay').value.trim();
+    var text = document.getElementById('review-text').value.trim();
+    if (!name || !text) return;
+
+    var reviews = loadReviews();
+    reviews.push({ name: name, stay: stay, text: text, rating: currentRating, time: Date.now() });
+    saveReviews(reviews);
+    renderReviews();
+
+    this.reset();
+    setStars(0);
+  });
+
+  renderReviews();
+</script>
+
+</body>
+</html>
