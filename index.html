@@ -540,6 +540,10 @@
           <label for="postcode">Postcode</label>
           <input id="postcode" name="postcode" type="text" placeholder="e.g. BS1 4ST" required>
         </div>
+        <label class="tc-row remember-row">
+          <input type="checkbox" id="remember-me">
+          Remember my details for next time (name, email, address, town, postcode)
+        </label>
         <div>
           <label for="start-date">Dates</label>
           <div class="date-range-row">
@@ -751,6 +755,21 @@
   });
   document.getElementById('end-date').addEventListener('change', updateNightsFromDates);
 
+  // ---------- Remember my details ----------
+  var REMEMBER_KEY = 'ruby-contact-details';
+  var REMEMBER_FIELDS = ['name', 'email', 'address', 'city', 'postcode'];
+
+  (function restoreRememberedDetails(){
+    try {
+      var saved = JSON.parse(localStorage.getItem(REMEMBER_KEY));
+      if (!saved) return;
+      REMEMBER_FIELDS.forEach(function(id){
+        if (saved[id]) document.getElementById(id).value = saved[id];
+      });
+      document.getElementById('remember-me').checked = true;
+    } catch(e){}
+  })();
+
   document.getElementById('cta-form').addEventListener('submit', function(e){
     e.preventDefault();
     var form = this;
@@ -758,6 +777,14 @@
     var originalText = btn.textContent;
     btn.textContent = 'Sending…';
     btn.disabled = true;
+
+    if (document.getElementById('remember-me').checked) {
+      var toSave = {};
+      REMEMBER_FIELDS.forEach(function(id){ toSave[id] = document.getElementById(id).value; });
+      localStorage.setItem(REMEMBER_KEY, JSON.stringify(toSave));
+    } else {
+      localStorage.removeItem(REMEMBER_KEY);
+    }
 
     fetch(form.action, {
       method: 'POST',
