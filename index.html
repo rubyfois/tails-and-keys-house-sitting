@@ -310,6 +310,9 @@
     font-family:'Karla',sans-serif; font-size:14.5px; background:var(--paper);
     color:var(--ink);
   }
+  .date-range-row{display:flex; align-items:center; gap:10px;}
+  .date-range-row input{flex:1; min-width:0;}
+  .date-range-sep{font-size:13.5px; color:rgba(28,35,32,0.55); flex-shrink:0;}
   .cta-form input:focus, .cta-form textarea:focus, .cta-form button:focus-visible,
   a:focus-visible, button:focus-visible{
     outline:2.5px solid var(--pine-deep); outline-offset:2px;
@@ -538,8 +541,12 @@
           <input id="postcode" name="postcode" type="text" placeholder="e.g. BS1 4ST" required>
         </div>
         <div>
-          <label for="dates">Dates</label>
-          <input id="dates" name="dates" type="text" placeholder="e.g. Sept 12–19" required>
+          <label for="start-date">Dates</label>
+          <div class="date-range-row">
+            <input id="start-date" name="start_date" type="date" required>
+            <span class="date-range-sep">to</span>
+            <input id="end-date" name="end_date" type="date" required>
+          </div>
         </div>
         <div class="quote-box">
           <p class="quote-label">Get a rough quote</p>
@@ -725,6 +732,24 @@
   });
   document.getElementById('q-small').addEventListener('change', calcQuote);
   calcQuote();
+
+  function updateNightsFromDates(){
+    var startVal = document.getElementById('start-date').value;
+    var endVal = document.getElementById('end-date').value;
+    if (!startVal || !endVal) return;
+    var start = new Date(startVal);
+    var end = new Date(endVal);
+    var diffDays = Math.round((end - start) / 86400000);
+    if (diffDays > 0) {
+      document.getElementById('q-nights').value = diffDays;
+      calcQuote();
+    }
+  }
+  document.getElementById('start-date').addEventListener('change', function(){
+    document.getElementById('end-date').min = this.value;
+    updateNightsFromDates();
+  });
+  document.getElementById('end-date').addEventListener('change', updateNightsFromDates);
 
   document.getElementById('cta-form').addEventListener('submit', function(e){
     e.preventDefault();
