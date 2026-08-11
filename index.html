@@ -544,7 +544,10 @@
         </div>
         <div>
           <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="nope" required>
+          <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="nope"
+                 pattern="[^@\s]+@[^@\s]+\.[A-Za-z]{2,}"
+                 title="Please enter a complete email address, including the ending — e.g. you@example.com"
+                 required>
         </div>
         <div>
           <label for="street-address">Address</label>
@@ -828,12 +831,16 @@
         return;
       }
       return response.text().then(function(body){
-        throw new Error('Server replied ' + response.status + ': ' + body.slice(0, 300));
+        var msg = 'Something went wrong sending that — please try again, or email directly.';
+        if (body.indexOf('TYPE_EMAIL') !== -1) {
+          msg = 'That email address doesn\'t look complete — please check it includes the ending, like you@example.com.';
+        }
+        throw new Error(msg);
       });
     }).catch(function(err){
       btn.textContent = originalText;
       btn.disabled = false;
-      alert('Couldn\'t send that.\n\nDETAILS (screenshot this):\n' + (err && err.message ? err.message : err));
+      alert(err && err.message ? err.message : 'Something went wrong sending that — please try again, or email directly.');
     });
   });
 
