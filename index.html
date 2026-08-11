@@ -521,24 +521,24 @@
       <form id="cta-form" class="cta-form" action="https://formspree.io/f/xqpzejek" method="POST">
         <input type="hidden" name="_subject" value="New house sitting request">
         <div>
-          <label for="name">Name</label>
-          <input id="name" name="name" type="text" placeholder="Your name" autocomplete="nope" required>
+          <label for="full-name">Name</label>
+          <input id="full-name" name="full_name" type="text" placeholder="Your name" autocomplete="nope" required>
         </div>
         <div>
           <label for="email">Email</label>
           <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="nope" required>
         </div>
         <div>
-          <label for="address">Address</label>
-          <input id="address" name="address" type="text" placeholder="Street address" autocomplete="nope" required>
+          <label for="street-address">Address</label>
+          <input id="street-address" name="street_address" type="text" placeholder="Street address" autocomplete="nope" required>
         </div>
         <div>
-          <label for="city">Town / City</label>
-          <input id="city" name="city" type="text" placeholder="e.g. Bristol" autocomplete="nope" required>
+          <label for="town-city">Town / City</label>
+          <input id="town-city" name="town_city" type="text" placeholder="e.g. Bristol" autocomplete="nope" required>
         </div>
         <div>
-          <label for="postcode">Postcode</label>
-          <input id="postcode" name="postcode" type="text" placeholder="e.g. BS1 4ST" autocomplete="nope" required>
+          <label for="post-code">Postcode</label>
+          <input id="post-code" name="post_code" type="text" placeholder="e.g. BS1 4ST" autocomplete="nope" required>
         </div>
         <label class="tc-row remember-row">
           <input type="checkbox" id="remember-me">
@@ -757,7 +757,7 @@
 
   // ---------- Remember my details ----------
   var REMEMBER_KEY = 'ruby-contact-details';
-  var REMEMBER_FIELDS = ['name', 'email', 'address', 'city', 'postcode'];
+  var REMEMBER_FIELDS = ['full-name', 'email', 'street-address', 'town-city', 'post-code'];
 
   (function restoreRememberedDetails(){
     try {
