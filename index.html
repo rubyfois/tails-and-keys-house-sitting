@@ -335,9 +335,27 @@
   .payment-followup-btn{
     display:inline-block; background:var(--pine-deep); color:var(--paper);
     padding:12px 22px; border-radius:100px; font-weight:700; font-size:14px;
+    border:none; cursor:pointer;
     transition:background .2s;
   }
   .payment-followup-btn:hover{background:#B57980;}
+
+  .bank-details-box{
+    display:none;
+    margin-top:16px; padding-top:16px; border-top:1px solid var(--line-light);
+    text-align:left;
+  }
+  .bank-details-box.show{display:block;}
+  .bank-details-title{font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:rgba(28,35,32,0.6); margin-bottom:10px;}
+  .bank-detail-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:9px 0; border-bottom:1px solid var(--line);
+    font-size:14.5px;
+  }
+  .bank-detail-label{color:rgba(28,35,32,0.6);}
+  .bank-detail-value{font-weight:700; color:var(--ink); font-family:'Karla',sans-serif; letter-spacing:0.02em;}
+  .bank-details-note{font-size:12.5px; color:rgba(28,35,32,0.65); line-height:1.5; margin:14px 0;}
+  #copy-bank-details-btn{width:100%; text-align:center;}
 
   .quote-box{background:var(--fog-dim); border-radius:10px; padding:16px; margin-top:4px;}
   .quote-label{font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:rgba(28,35,32,0.6); margin-bottom:10px;}
@@ -636,7 +654,25 @@
 
         <div id="payment-followup" class="payment-followup">
           <p class="payment-followup-text">Once your official overall cost is approved by email, tap below to go ahead with your payment plan.</p>
-          <a href="#" class="payment-followup-btn">Proceed to payment</a>
+          <button type="button" id="payment-toggle-btn" class="payment-followup-btn">Proceed to payment</button>
+
+          <div id="bank-details-box" class="bank-details-box">
+            <p class="bank-details-title">Bank transfer details</p>
+            <div class="bank-detail-row">
+              <span class="bank-detail-label">Account name</span>
+              <span class="bank-detail-value" data-copy="Ruby Fois">Ruby Fois</span>
+            </div>
+            <div class="bank-detail-row">
+              <span class="bank-detail-label">BSB</span>
+              <span class="bank-detail-value" data-copy="484799">484799</span>
+            </div>
+            <div class="bank-detail-row">
+              <span class="bank-detail-label">Account number</span>
+              <span class="bank-detail-value" data-copy="005249937">005249937</span>
+            </div>
+            <p class="bank-details-note">Please use your <strong>name and booking dates</strong> as the payment reference so it's easy to match up — and pay the amount confirmed in your email (either the full total, or the first half if you chose Half &amp; half).</p>
+            <button type="button" id="copy-bank-details-btn" class="btn-ghost">Copy all details</button>
+          </div>
         </div>
       </form>
     </div>
@@ -798,6 +834,24 @@
       btn.textContent = originalText;
       btn.disabled = false;
       alert('Something went wrong sending that — please try again, or email directly.');
+    });
+  });
+
+  // ---------- Payment / bank details ----------
+  document.getElementById('payment-toggle-btn').addEventListener('click', function(){
+    document.getElementById('bank-details-box').classList.toggle('show');
+  });
+
+  document.getElementById('copy-bank-details-btn').addEventListener('click', function(){
+    var values = document.querySelectorAll('#bank-details-box .bank-detail-value');
+    var text = 'Account name: ' + values[0].dataset.copy +
+      '\nBSB: ' + values[1].dataset.copy +
+      '\nAccount number: ' + values[2].dataset.copy;
+    navigator.clipboard.writeText(text).then(function(){
+      var btn = document.getElementById('copy-bank-details-btn');
+      var original = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(function(){ btn.textContent = original; }, 1800);
     });
   });
 
