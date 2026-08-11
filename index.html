@@ -559,8 +559,8 @@
           <input id="street-address" name="street_address" type="text" placeholder="Street address" autocomplete="nope" required>
         </div>
         <div>
-          <label for="town-city">Town / City</label>
-          <input id="town-city" name="town_city" type="text" placeholder="e.g. Bristol" autocomplete="nope" required>
+          <label for="phone-number">Phone</label>
+          <input id="phone-number" name="phone_number" type="tel" placeholder="e.g. 0412 345 678" autocomplete="nope" required>
         </div>
         <div>
           <label for="post-code">Postcode</label>
@@ -568,7 +568,7 @@
         </div>
         <label class="tc-row remember-row">
           <input type="checkbox" id="remember-me">
-          Remember my details for next time (name, email, address, town, postcode)
+          Remember my details for next time (name, email, address, phone, postcode)
         </label>
         <div>
           <label for="start-date">Dates</label>
@@ -796,7 +796,7 @@
 
   // ---------- Remember my details ----------
   var REMEMBER_KEY = 'ruby-contact-details';
-  var REMEMBER_FIELDS = ['full-name', 'email', 'street-address', 'town-city', 'post-code'];
+  var REMEMBER_FIELDS = ['full-name', 'email', 'street-address', 'phone-number', 'post-code'];
 
   (function restoreRememberedDetails(){
     try {
