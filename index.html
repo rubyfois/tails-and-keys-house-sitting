@@ -825,15 +825,15 @@
       if (response.ok) {
         btn.textContent = 'Sent — I\'ll reply soon';
         document.getElementById('payment-followup').classList.add('show');
-      } else {
-        btn.textContent = originalText;
-        btn.disabled = false;
-        alert('Something went wrong sending that — please try again, or email directly.');
+        return;
       }
-    }).catch(function(){
+      return response.text().then(function(body){
+        throw new Error('Server replied ' + response.status + ': ' + body.slice(0, 300));
+      });
+    }).catch(function(err){
       btn.textContent = originalText;
       btn.disabled = false;
-      alert('Something went wrong sending that — please try again, or email directly.');
+      alert('Couldn\'t send that.\n\nDETAILS (screenshot this):\n' + (err && err.message ? err.message : err));
     });
   });
 
