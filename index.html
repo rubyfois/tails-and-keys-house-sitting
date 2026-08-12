@@ -190,22 +190,18 @@
 
   /* ---------- About ---------- */
   .about{
-    max-width:720px;
+    display:grid; grid-template-columns:1.15fr 0.85fr;
+    gap:52px; align-items:center;
   }
   .about-copy p{margin-bottom:18px; font-size:16px; color:rgba(28,35,32,0.82); transition:text-shadow .3s ease;}
   .about-copy p:hover{
     text-shadow:0 0 6px rgba(232,102,138,0.85), 0 0 16px rgba(232,102,138,0.55), 0 0 30px rgba(232,102,138,0.35);
   }
   .about-copy p:first-of-type{color:var(--ink);}
-  .about-photos{
-    display:grid; grid-template-columns:1fr 1fr; gap:18px;
-    margin-top:36px; align-items:start;
-    max-width:520px;
-  }
   .about-photo{
     width:100%; height:auto; display:block;
-    border-radius:14px;
-    box-shadow:0 4px 14px rgba(58,44,48,0.10);
+    border-radius:16px;
+    box-shadow:0 6px 20px rgba(58,44,48,0.12);
   }
   .creds{
     display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
@@ -462,6 +458,7 @@
     }
     .nav-links a:first-child{margin-top:8px;}
     .hero-photo{margin:28px auto 0;}
+    .about{grid-template-columns:1fr; gap:32px;}
     .service-grid{grid-template-columns:repeat(2,1fr);}
     .steps{grid-template-columns:repeat(2,1fr);}
     .quote-row{grid-template-columns:1fr;}
@@ -472,7 +469,6 @@
     section{padding:64px 0;}
     .service-grid{grid-template-columns:1fr;}
     .steps{grid-template-columns:1fr;}
-    .about-photos{grid-template-columns:1fr; gap:20px; max-width:280px;}
   }
 </style>
 </head>
@@ -525,10 +521,7 @@
       <p>Bonus perk: I also work as a professional house cleaner! That means while you're away, your pets are pampered, your property is secure, and you get to walk through the door to a sparkling clean, fresh home upon your return.</p>
     </div>
 
-    <div class="about-photos">
-      <img class="about-photo" src="images/ruby-horse.jpg" alt="Ruby leaning over and patting her bay horse at the stables" loading="lazy">
-      <img class="about-photo" src="images/ruby-partner-dog.jpg" alt="Ruby and her partner sitting together with their large curly-coated dog" loading="lazy">
-    </div>
+    <img class="about-photo" src="images/ruby-horse.jpg" alt="Ruby leaning over and patting her bay horse at the stables" loading="lazy">
   </div>
 </section>
 
