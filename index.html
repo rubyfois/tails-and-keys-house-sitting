@@ -94,7 +94,22 @@
     transition:background .2s;
   }
   .nav-cta:hover{background:var(--pine-deep); color:var(--paper);}
-  .nav-toggle{display:none;}
+  .nav-right{display:flex; align-items:center; gap:12px;}
+  .nav-toggle{
+    display:none;
+    width:42px; height:42px; padding:9px;
+    background:none; border:none; cursor:pointer;
+    flex-direction:column; justify-content:center; gap:5px;
+    border-radius:8px;
+  }
+  .nav-toggle-bar{
+    display:block; width:100%; height:2px; border-radius:2px;
+    background:var(--ink);
+    transition:transform .25s ease, opacity .2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
   /* ---------- Hero ---------- */
   .hero{
@@ -418,7 +433,21 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width: 860px){
-    .nav-links{display:none;}
+    nav{flex-wrap:wrap; row-gap:0;}
+    .nav-toggle{display:flex;}
+    .nav-links{
+      display:flex; flex-direction:column; gap:0;
+      order:3; width:100%;
+      max-height:0; overflow:hidden;
+      transition:max-height .3s ease;
+    }
+    .nav-links.open{max-height:300px;}
+    .nav-links a{
+      padding:14px 2px; opacity:1;
+      border-top:1px solid var(--line);
+      font-size:15.5px;
+    }
+    .nav-links a:first-child{margin-top:8px;}
     .hero-photo{margin:28px auto 0;}
     .service-grid{grid-template-columns:repeat(2,1fr);}
     .steps{grid-template-columns:repeat(2,1fr);}
@@ -438,13 +467,21 @@
 <header>
   <nav>
     <div class="brand"><span class="dot"></span>Tails &amp; Keys House Sitting</div>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#how">How it works</a>
       <a href="#reviews">Reviews</a>
     </div>
-    <a href="#contact" class="nav-cta">Check availability</a>
+    <div class="nav-right">
+      <a href="#contact" class="nav-cta">Check availability</a>
+      <button type="button" class="nav-toggle" id="nav-toggle"
+              aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
   </nav>
 </header>
 
@@ -848,6 +885,32 @@
       alert(err && err.message ? err.message : 'Something went wrong sending that — please try again, or email directly.');
     });
   });
+
+  // ---------- Mobile nav ----------
+  (function(){
+    var toggle = document.getElementById('nav-toggle');
+    var links = document.getElementById('nav-links');
+
+    function setOpen(open){
+      links.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
+    toggle.addEventListener('click', function(){
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Close after tapping a link so the page isn't hidden behind the menu
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ setOpen(false); });
+    });
+
+    // Reset when resizing back up to desktop
+    window.addEventListener('resize', function(){
+      if (window.innerWidth > 860) setOpen(false);
+    });
+  })();
 
   // ---------- Payment / bank details ----------
   document.getElementById('payment-toggle-btn').addEventListener('click', function(){
