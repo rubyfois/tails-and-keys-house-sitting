@@ -273,7 +273,6 @@
   .quote-card .stars{color:var(--pine-deep); font-size:14px; letter-spacing:2px; margin-bottom:16px;}
   .quote-card p.q{font-size:15.5px; color:rgba(58,44,48,0.85); margin-bottom:20px;}
   .quote-card .who{font-size:13.5px; color:rgba(58,44,48,0.55); font-weight:600;}
-  .review-empty{font-size:14.5px; color:rgba(58,44,48,0.6); text-align:center; padding:20px 0;}
 
   .review-form-box{
     background:rgba(255,251,246,0.55); border:1px solid var(--line-light);
@@ -427,6 +426,10 @@
   footer{padding:56px 0 40px; border-top:1px solid var(--line);}
   .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;}
   .foot-brand{font-family:'Fraunces',serif; font-size:18px; font-weight:600;}
+  .foot-area{font-size:14px; color:rgba(28,35,32,0.6); margin-top:6px;}
+  .foot-contact{font-size:14px; margin-top:4px;}
+  .foot-contact a{color:var(--pine-deep); font-weight:600;}
+  .foot-contact a:hover{text-decoration:underline;}
   .foot-links{display:flex; gap:26px; font-size:13.5px; color:rgba(28,35,32,0.6);}
   .foot-links a:hover{color:var(--ink);}
   .foot-bottom{margin-top:28px; font-size:12.5px; color:rgba(28,35,32,0.45);}
@@ -695,7 +698,7 @@
         </div>
 
         <button type="submit">Send request</button>
-        <p class="form-note">This is a demo form — hook it up to email or a booking tool when you're ready to go live.</p>
+        <p class="form-note">I'll get back to you by email, usually within a day.</p>
 
         <div id="payment-followup" class="payment-followup">
           <p class="payment-followup-text">Please don't pay the rough estimate above — wait until I've emailed you the confirmed total, then tap below to go ahead with your payment plan.</p>
@@ -730,15 +733,16 @@
       <p class="eyebrow">Reviews</p>
       <h2>What it's like coming home</h2>
     </div>
+    <!-- Featured reviews: add real client quotes here as they come in -->
     <div class="quote-row" id="review-list"></div>
-    <p class="review-empty" id="review-empty">No reviews yet — be the first to leave one.</p>
 
     <div class="review-form-box">
       <p class="quote-label">Leave a review</p>
-      <form id="review-form">
+      <form id="review-form" action="https://formspree.io/f/xqpzejek" method="POST">
+        <input type="hidden" name="_subject" value="New review from a client">
         <div class="review-form-row">
-          <input id="review-name" type="text" placeholder="Your name" required>
-          <input id="review-stay" type="text" placeholder="e.g. Weekend trip, cat + plants">
+          <input id="review-name" name="reviewer_name" type="text" placeholder="Your name" autocomplete="nope" required>
+          <input id="review-stay" name="stay_type" type="text" placeholder="e.g. Weekend trip, cat + plants" autocomplete="nope">
         </div>
         <div class="star-picker" id="star-picker" role="radiogroup" aria-label="Rating">
           <button type="button" class="star-btn" data-value="1" aria-label="1 star">★</button>
@@ -747,10 +751,11 @@
           <button type="button" class="star-btn" data-value="4" aria-label="4 stars">★</button>
           <button type="button" class="star-btn" data-value="5" aria-label="5 stars">★</button>
         </div>
-        <textarea id="review-text" rows="3" placeholder="How did it go?" required></textarea>
+        <input type="hidden" id="review-rating" name="rating" value="">
+        <textarea id="review-text" name="review" rows="3" placeholder="How did it go?" required></textarea>
         <button type="submit">Submit review</button>
       </form>
-      <p class="form-note">Reviews are saved in your browser for this demo, with the best-rated shown first — hook this up to a real review system when you're ready to go live.</p>
+      <p class="form-note">Your review comes straight through to me — with your okay, I'll feature it here on the site.</p>
     </div>
   </div>
 </section>
@@ -758,7 +763,11 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <div class="foot-brand">Tails &amp; Keys House Sitting</div>
+      <div>
+        <div class="foot-brand">Tails &amp; Keys House Sitting</div>
+        <p class="foot-area">Serving the Mornington Peninsula</p>
+        <p class="foot-contact"><a href="mailto:rubycavallofois@gmail.com">rubycavallofois@gmail.com</a></p>
+      </div>
       <div class="foot-links">
         <a href="#about">About</a>
         <a href="#services">Services</a>
@@ -931,12 +940,12 @@
   });
 
   // ---------- Reviews ----------
-  var REVIEWS_KEY = 'ruby-reviews';
   var currentRating = 0;
   var starButtons = document.querySelectorAll('.star-btn');
 
   function setStars(value){
     currentRating = value;
+    document.getElementById('review-rating').value = value ? value + ' out of 5' : '';
     starButtons.forEach(function(btn){
       btn.classList.toggle('active', parseInt(btn.dataset.value) <= value);
     });
@@ -946,70 +955,41 @@
     btn.addEventListener('click', function(){ setStars(parseInt(btn.dataset.value)); });
   });
 
-  function loadReviews(){
-    try { return JSON.parse(localStorage.getItem(REVIEWS_KEY)) || []; }
-    catch(e){ return []; }
-  }
-
-  function saveReviews(reviews){
-    localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
-  }
-
-  function renderReviews(){
-    var reviews = loadReviews();
-    var list = document.getElementById('review-list');
-    var empty = document.getElementById('review-empty');
-
-    if (reviews.length === 0){
-      list.innerHTML = '';
-      empty.style.display = 'block';
-      return;
-    }
-    empty.style.display = 'none';
-
-    var sorted = reviews.slice().sort(function(a,b){
-      if (b.rating !== a.rating) return b.rating - a.rating;
-      return b.time - a.time;
-    }).slice(0, 6);
-
-    list.innerHTML = sorted.map(function(r){
-      var stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-      var stayLine = r.stay ? (r.name + ' — ' + r.stay) : r.name;
-      return '<div class="quote-card">' +
-        '<div class="stars">' + stars + '</div>' +
-        '<p class="q">' + escapeHtml(r.text) + '</p>' +
-        '<div class="who">' + escapeHtml(stayLine) + '</div>' +
-      '</div>';
-    }).join('');
-  }
-
-  function escapeHtml(str){
-    var div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
   document.getElementById('review-form').addEventListener('submit', function(e){
     e.preventDefault();
     if (currentRating === 0){
       alert('Please pick a star rating.');
       return;
     }
-    var name = document.getElementById('review-name').value.trim();
-    var stay = document.getElementById('review-stay').value.trim();
-    var text = document.getElementById('review-text').value.trim();
-    if (!name || !text) return;
 
-    var reviews = loadReviews();
-    reviews.push({ name: name, stay: stay, text: text, rating: currentRating, time: Date.now() });
-    saveReviews(reviews);
-    renderReviews();
+    var form = this;
+    var btn = form.querySelector('button[type="submit"]');
+    var originalText = btn.textContent;
+    btn.textContent = 'Sending\u2026';
+    btn.disabled = true;
 
-    this.reset();
-    setStars(0);
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response){
+      if (response.ok) {
+        btn.textContent = 'Thank you!';
+        form.reset();
+        setStars(0);
+        setTimeout(function(){
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 3000);
+        return;
+      }
+      throw new Error('bad response');
+    }).catch(function(){
+      btn.textContent = originalText;
+      btn.disabled = false;
+      alert('Something went wrong sending that \u2014 please try again.');
+    });
   });
-
-  renderReviews();
 </script>
 
 </body>
