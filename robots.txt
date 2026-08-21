@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rubyfois.github.io/tails-and-keys-house-sitting/sitemap.xml
+Sitemap: https://tailsandkeys.com/sitemap.xml
